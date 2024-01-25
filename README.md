@@ -1,4 +1,5 @@
 ## Dependencies:
 - picom
-- networkmanager-dmenu
 - polybar
+- rofi
+- feh 
