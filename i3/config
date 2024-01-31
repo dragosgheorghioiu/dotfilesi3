@@ -47,11 +47,10 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5% && $refresh_i3status
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%- && $refresh_i3status
 
-#interactive screenshot by pressing printscreen
-bindsym Print exec --no-startup-id gnome-screenshot -i 
-#crop-area screenshot by pressing Mod + printscreen
-bindsym $mod+Print exec --no-startup-id gnome-screenshot -a
+exec --no-startup-id xfce4-clipman &
 
+bindsym Print exec xfce4-screenshooter -c && exit
+bindsym $mod+Print exec xfce4-screenshooter -r -c && exit
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -73,10 +72,14 @@ gaps inner 10px
 
 # Configure an additional 5px of extra space to the screen edges,
 # for a total gap of 10px to the screen edges, and 5px between windows.
-gaps outer 5px
+#gaps outer 0px
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id "rofi -i -show drun -modi drun -show-icons"
+bindsym $mod+d exec "rofi -modi drun, run -show drun -show-icons"
+bindsym $mod+Shift+w exec "rofi -modi window -show window -show-icons"
+bindsym $mod+Shift+p exec "rofi -modi calc -show calc"
+bindsym $mod+Control+a exec "pavucontrol"
+bindsym $mod+Control+b exec "blueman"
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
@@ -84,10 +87,10 @@ bindsym $mod+d exec --no-startup-id "rofi -i -show drun -modi drun -show-icons"
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -96,10 +99,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -108,7 +111,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+b split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -210,8 +213,19 @@ bindsym $mod+r mode "resize"
 #        status_command i3status
 #}
 
+# class                 border  backgr. text    indicator child_border
+client.focused          #4c7899 #285577 #ffffff #ffffff   #83b9c9
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+client.background       #ffffff
+
 exec_always --no-startup-id  feh --bg-scale --zoom fill ~/Pictures/OuterWilds.jpg
 
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh 
 
 exec_always --no-startup-id picom
+
+exec_always --no-startup-id $HOME/.screenlayout/dualmonitors.sh
